@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="offset-md-4 col-md-4">
+
+            <div class="messages">
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <p class="alert alert-{{ message.tags }} text-center"> {{ message }}</p>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+</html>

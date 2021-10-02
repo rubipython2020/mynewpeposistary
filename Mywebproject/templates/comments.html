@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+
+        <div class="container-fluid">
+            <div class="row">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <input type="submit" value="Submit" class="btn btn-success">
+                </form>
+            </div>
+        </div>
+
+        {{ comments.count }} Comment{{ comments|pluralize }}
+        {% for comment in comments  %}
+        <blockquote class="blockquote">
+            <p class="mb-0">{{ comment.content }}</p>
+            <footer class="blockquote-footer">By <cite title="Source Title">{{ comment.user }}</cite>
+            <button class="reply-btn ml-2 btn btn-primary btn-outline-dark text-white btn-sm" type="button" name="button">Reply</button>
+            </footer>
+        </blockquote>
+
+            <div class="replied-comments container" style="display: none">
+                {% for reply in comment.replies.all %}
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{ reply.content }}</p>
+                        <footer class="blockquote-footer">By <cite title="Source Title">{{ reply.user }}</cite></footer>
+                    </blockquote>
+                {% endfor %}
+                <div class="row form-group ">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                        {{ comment_form.as_p }}
+                        <input type="submit" value="Submit" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+
+
+</body>
+</html>

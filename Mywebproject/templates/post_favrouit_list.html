@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="row ml-2 mr-2" >
+        {% for post in favourite_posts %}
+            <div class="col-md-6">
+                <div class="img-thumbnail">
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a><small style="float: right">{{ post.created }}</small>  <br>
+                    Author: {{ post.author }}<br>
+                    {{ post.body }}
+                </div>
+                <br>
+            </div>
+        {% empty %}
+        <div>
+            <h2>No Favourite Post Found</h2>
+        </div>
+        {% endfor %}
+</div>
+{% endblock %}
+
+</body>
+</html>

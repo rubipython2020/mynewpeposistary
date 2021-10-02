@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<title>{% block title %} {{ block.super }}: {{ post.title }} {% endblock %}</title>
+
+{% include 'alerts.html' %}
+
+<div class="container-fluid" style="margin: 20px;">
+    <h2>{{ post.title }}</h2><br>
+    <small>Post Created By: {{ post.author }}</small>
+    <hr>
+    {{ post.body }}<br><br>
+    {{ total_likes }} Like{{ total_likes|pluralize }}
+    <br>
+    <form action="{% url 'like_post' %}" method="POST">
+        {% csrf_token %}
+
+        {% if is_liked %}
+        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger">Dislike</button>
+        {% else %}
+        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Like</button>
+        {% endif %}
+    </form>
+
+
+    <div id="favourite-section">
+    {% if is_favourite %}
+        <a href="{% url 'favourite_post' id=post.id %}">
+            <i class="fas fa-heart fa-lg"></i>
+        </a>
+    {% else %}
+        <a href="{% url 'favourite_post' id=post.id %}">
+            <i class="far fa-heart fa-lg"></i>
+        </a>
+    {% endif %}
+    </div>
+
+
+<br>
+    {% if post.author == request.user %}
+    <div>
+        <a href="{% url 'post_edit' id=post.id %}" class="btn btn-lg btn-primary text-white" >Edit</a>
+        <a href="{% url 'post_delete' id=post.id %}" class="btn btn-danger btn-lg text-white">Delete</a>
+    </div>
+    {% endif %}
+
+<br>
+
+    {% if  not post.restrict_comment %}
+        <div class="main-comment-section">
+            {% include 'comments.html' %}
+        </div>
+    {% endif %}
+
+
+
+{% endblock %}
+</div>

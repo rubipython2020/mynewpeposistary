@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title></title>
+    {% include 'cdnlines.html' %}
+</head>
+<body>
+{% include 'alerts.html' %}
+<div class="container-fluid">
+<h3 class="text-center">Login Here...</h3>
+    <div class="row">
+        <div class="offset-md-4 col-md-4">
+            <form method="POST">
+            {%  csrf_token %}
+            <label>Enter Your UserName</label>
+            <input type="text" name="username"placeholder="Username" class="form-control">
+
+            <label>Enter Your Password</label>
+            <input type="password" name="password" placeholder="Password" class="form-control">
+
+            <center>
+            <input type="submit" value="Login" class="btn btn-success">
+            <input type="reset" value="Clear" class="btn btn-danger">
+             </center>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
